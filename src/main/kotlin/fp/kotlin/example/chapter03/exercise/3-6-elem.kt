@@ -14,4 +14,13 @@ fun main() {
     require(!elem(5, listOf(1, 3, 7)))
 }
 
-private fun elem(num: Int, list: List<Int>): Boolean = TODO()
+private fun elem(num: Int, list: List<Int>): Boolean = when {
+    list.isEmpty() -> false
+    else -> {
+        if (list.first() == num) {
+            true
+        } else {
+            elem(num, list.drop(1))
+        }
+    }
+}

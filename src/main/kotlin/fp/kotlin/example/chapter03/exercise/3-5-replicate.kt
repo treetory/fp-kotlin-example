@@ -15,4 +15,17 @@ fun main() {
     require(listOf(1, 1, 1, 1, 1) == replicate(5, 1))
 }
 
-private fun replicate(n: Int, element: Int): List<Int> = TODO()
+private fun replicate(n: Int, element: Int): List<Int> = when {
+    n <= 0 -> listOf()
+    else -> listOf(element) + replicate(n-1, element)
+}
+
+private fun replicate2(n: Int, element: Int, acc: List<Int>): List<Int> {
+    return when(n) {
+        0 -> acc
+        else -> {
+            val temp = acc + element
+            return replicate2(n-1, element, temp)
+        }
+    }
+}

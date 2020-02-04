@@ -13,4 +13,9 @@ fun main() {
     require(3628800 == factorial(10))
 }
 
-private fun factorial(n: Int): Int = TODO()
+private fun factorial(n: Int): Int {
+    return when (n) {
+        0 -> 1
+        else -> n * factorial(n - 1)
+    }
+}
