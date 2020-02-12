@@ -10,6 +10,12 @@ fun main() {
     /*
      * 주석을 해제하고 아래 조건을 만족하는 함수 max를 구현해보세요.
      */
-//    require(30 == max(10)(30))
+    require(30 == max(10)(30))
+    //println(max(10)(30))
 }
 
+fun max(a: Int) = { b: Int -> a.coerceAtLeast(b) }
+
+fun max2(value: Int): (Int) -> Int {
+    return { t2 -> if (value > t2) value else t2 }
+}

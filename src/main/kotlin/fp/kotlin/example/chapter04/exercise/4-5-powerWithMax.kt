@@ -13,8 +13,10 @@ fun main() {
     require(power(max(list)) == 49)
     require(power(max(list2)) == 169)
 
+    println(power(max(list)))
+    println(power(max(list2)))
 }
 
-val max: (List<Int>) -> Int = { list: List<Int> -> TODO() }
+val max: (List<Int>) -> Int = { list: List<Int> -> list.max()!! }
 
-val power: (Int) -> Int = { value -> TODO() }
+val power: (Int) -> Int = { value -> value.times(value) }

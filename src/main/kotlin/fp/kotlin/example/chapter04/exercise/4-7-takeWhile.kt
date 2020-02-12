@@ -1,5 +1,8 @@
 package fp.kotlin.example.chapter04.exercise
 
+import fp.kotlin.example.head
+import fp.kotlin.example.tail
+
 /**
  * 연습문제 4-7
  *
@@ -8,7 +11,24 @@ package fp.kotlin.example.chapter04.exercise
  */
 fun main() {
     require(listOf(1, 2) == takeWhile({ p -> p < 3 }, listOf(1, 2, 3, 4, 5)))
+    println(takeWhile({ p -> p < 3 }, listOf(1, 2, 3, 4, 5)))
     require(listOf('h', 'e', 'l', 'l', 'o') == takeWhile({ p -> ' ' != p }, "hello world".toList()))
+    println(takeWhile({ p -> ' ' != p }, "hello world".toList()))
 }
 
-private tailrec fun <P> takeWhile(predicate: (P) -> Boolean, list: List<P>, acc: List<P> = listOf()): List<P> = TODO()
+private tailrec fun <P> takeWhile(predicate: (P) -> Boolean, list: List<P>, acc: List<P> = listOf()): List<P> = when {
+    list.isEmpty() -> acc
+    !predicate(list.head()) -> acc
+    else -> takeWhile(predicate, list.drop(1), acc+list.first())
+    /*
+    {
+        when (predicate.invoke(list.first())) {
+            true -> {
+                println(acc)
+                takeWhile(predicate, list.tail(), acc+list.first())
+            }
+            false -> takeWhile(predicate, list.tail(), acc)
+        }
+
+    }*/
+}

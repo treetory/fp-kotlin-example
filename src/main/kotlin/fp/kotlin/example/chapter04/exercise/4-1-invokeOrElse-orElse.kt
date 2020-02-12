@@ -16,20 +16,31 @@ class PartialFunction<P, R>(
         private val condition: (P) -> Boolean,
         private val f: (P) -> R) :(P) -> R {
 
-    override fun invoke(p: P): R {
+    override operator fun invoke(p: P): R {
         if (condition(p)) {
             return f(p)
         } else {
-            throw IllegalArgumentException("$p isn't supported.")
+            throw IllegalArgumentException("$p isn't supported.") as Throwable
         }
     }
 
     fun isDefinedAt(p: P): Boolean = condition(p)
 
-    fun invokeOrElse(p: P, default: R): R = TODO()
+    fun invokeOrElse(p: P, default: R): R {
+        return if (isDefinedAt(p)) {
+            invoke(p)
+        } else default
+    }
 
     fun orElse(that: PartialFunction<P, R>): PartialFunction<P, R> =
-            PartialFunction({ it: P -> this.isDefinedAt(it) || that.isDefinedAt(it) }, { it: P -> TODO() })
+            PartialFunction(
+                    { it: P -> this.isDefinedAt(it) || that.isDefinedAt(it) }, // condition
+                    { it: P -> when {
+                                    this.isDefinedAt(it) -> this.invoke(it)
+                                    that.isDefinedAt(it) -> that.invoke(it)
+                                    else -> throw java.lang.IllegalArgumentException("$it isn't supported.")
+                                    } // 실행할 lambda
+                    })
 }
 
 fun <P, R> ((P) -> R).toPartialFunction(definedAt: (P) -> Boolean)
