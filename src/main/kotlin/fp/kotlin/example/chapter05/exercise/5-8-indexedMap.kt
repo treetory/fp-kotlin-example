@@ -1,9 +1,8 @@
 package fp.kotlin.example.chapter05.exercise
 
-import fp.kotlin.example.chapter05.FunList
+import fp.kotlin.example.chapter05.*
 import fp.kotlin.example.chapter05.FunList.Cons
 import fp.kotlin.example.chapter05.FunList.Nil
-import fp.kotlin.example.chapter05.funListOf
 
 /**
  *
@@ -21,4 +20,10 @@ fun main() {
     require(intList.indexedMap { index, elm -> index * elm } == funListOf(0, 2, 6))
 }
 
-tailrec fun <T, R> FunList<T>.indexedMap(index: Int = 0, acc: FunList<R> = Nil, f: (Int, T) -> R): FunList<R> = TODO()
+tailrec fun <T, R> FunList<T>.indexedMap(index: Int = 0, acc: FunList<R> = Nil, f: (Int, T) -> R): FunList<R> = when (this) {
+    FunList.Nil -> acc.reverse()
+    is FunList.Cons -> {
+        val idx = index + 1
+        this.getTail().indexedMap(idx, acc.addHead(f(index, this.getHead())), f)
+    }
+}

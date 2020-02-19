@@ -1,7 +1,6 @@
 package fp.kotlin.example.chapter05.exercise
 
-import fp.kotlin.example.chapter05.FunList
-import fp.kotlin.example.chapter05.funListOf
+import fp.kotlin.example.chapter05.*
 
 /**
  *
@@ -17,6 +16,20 @@ import fp.kotlin.example.chapter05.funListOf
 fun main() {
     require(
         funListOf(1, 2, 3, 4, 5).associate { it to it * 10 } == funListOf(1 to 10, 2 to 20, 3 to 30, 4 to 40, 5 to 50))
+    require(
+        funListOf(1, 2, 3, 4, 5).associate2 { it to it * 10 } == funListOf(1 to 10, 2 to 20, 3 to 30, 4 to 40, 5 to 50))
+    require(
+        funListOf(1, 2, 3, 4, 5).associate3 { it to it * 10 } == mapOf(1 to 10, 2 to 20, 3 to 30, 4 to 40, 5 to 50))
 }
 
-fun <T, R> FunList<T>.associate(f: (T) -> Pair<T, R>): Map<T, R> = TODO()
+fun <T, R> FunList<T>.associate(f: (T) -> Pair<T, R>): FunList<Pair<T, R>> = foldRight(funListOf()) {
+    cur: T, acc: FunList<Pair<T, R>> -> acc.addHead(f(cur))
+}
+
+fun <T, R> FunList<T>.associate2(f: (T) -> Pair<T, R>): FunList<Pair<T, R>> = foldLeft(funListOf()) {
+    acc: FunList<Pair<T, R>>, cur: T -> acc.appendTail(f(cur))
+}
+
+fun <T, R> FunList<T>.associate3(f: (T) -> Pair<T, R>): Map<T, R> = foldRight(mapOf()) {
+    cur: T, acc: Map<T, R> -> acc.plus(f(cur))
+}

@@ -1,9 +1,8 @@
 package fp.kotlin.example.chapter05.exercise
 
-import fp.kotlin.example.chapter05.FunList
+import fp.kotlin.example.chapter05.*
 import fp.kotlin.example.chapter05.FunList.Cons
 import fp.kotlin.example.chapter05.FunList.Nil
-import fp.kotlin.example.chapter05.funListOf
 
 /**
  * 연습문제 5-7
@@ -20,4 +19,13 @@ fun main() {
     require(intList.takeWhile { it < 0 } == Nil)
 }
 
-tailrec fun <T> FunList<T>.takeWhile(acc: FunList<T> = Nil, p: (T) -> Boolean): FunList<T> = TODO()
+tailrec fun <T> FunList<T>.takeWhile(acc: FunList<T> = Nil, p: (T) -> Boolean): FunList<T> = when(this) {
+    Nil -> Nil
+    is Cons -> {
+        if (p(this.getHead())) {
+            this.getTail().takeWhile(acc.addHead(this.getHead()), p)
+        } else {
+            acc.reverse()
+        }
+    }
+}

@@ -1,6 +1,8 @@
 package fp.kotlin.example.chapter05.exercise
 
 import fp.kotlin.example.chapter05.FunList
+import fp.kotlin.example.chapter05.addHead
+import fp.kotlin.example.chapter05.foldLeft
 import fp.kotlin.example.chapter05.funListOf
 
 /**
@@ -18,4 +20,6 @@ fun main() {
     require(list.reverseByFoldRight() == funListOf(5, 4, 3, 2, 1))
 }
 
-fun <T> FunList<T>.reverseByFoldRight(): FunList<T> = TODO()
+fun <T> FunList<T>.reverseByFoldRight(): FunList<T> = this.foldLeft(FunList.Nil) {
+    acc: FunList<T>, cur: T -> acc.addHead(cur)
+}

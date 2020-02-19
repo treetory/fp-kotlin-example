@@ -1,7 +1,6 @@
 package fp.kotlin.example.chapter05.exercise
 
-import fp.kotlin.example.chapter05.FunList
-import fp.kotlin.example.chapter05.funListOf
+import fp.kotlin.example.chapter05.*
 
 /**
  *
@@ -21,4 +20,7 @@ fun main() {
     require(charList.zip(funListOf(1, 2, 3)) == funListOf('a' to 1, 'b' to 2, 'c' to 3))
 }
 
-tailrec fun <T, R> FunList<T>.zip(other: FunList<R>, acc: FunList<Pair<T, R>> = FunList.Nil): FunList<Pair<T, R>> = TODO()
+tailrec fun <T, R> FunList<T>.zip(other: FunList<R>, acc: FunList<Pair<T, R>> = FunList.Nil): FunList<Pair<T, R>> = when {
+    this === FunList.Nil || other === FunList.Nil -> acc.reverse()
+    else -> getTail().zip(other.getTail(), acc.addHead(Pair(this.getHead(), other.getHead())))
+}
