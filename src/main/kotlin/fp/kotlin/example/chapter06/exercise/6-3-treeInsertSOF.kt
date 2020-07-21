@@ -1,5 +1,10 @@
 package fp.kotlin.example.chapter06.exercise
 
+import fp.kotlin.example.chapter05.foldLeft
+import fp.kotlin.example.chapter05.funListOf
+import fp.kotlin.example.chapter05.funStreamOf
+import fp.kotlin.example.chapter10.solution.FunList
+
 /**
  *
  * 연습문제 6-3
@@ -11,5 +16,9 @@ package fp.kotlin.example.chapter06.exercise
  */
 
 fun main() {
-   TODO()
+   /*
+   (1..100000).fold(EmptyTree as Tree<Int>) {
+      acc, i ->  acc.insert(i)
+   }
+    */
 }

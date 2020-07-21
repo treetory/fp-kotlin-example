@@ -16,7 +16,7 @@ package fp.kotlin.example.chapter06.exercise
 fun main() {
     /*
      * 주석을 해제하고 insert()를 구현해보세요.
-
+     */
 
     val tree1 = EmptyTree.insert(5)
     require(tree1 == Node(5, EmptyTree, EmptyTree))
@@ -87,7 +87,16 @@ fun main() {
             )
         )
     )
-     */
+
 }
 
-fun Tree<Int>.insert(elem: Int): Tree<Int> = TODO()
+fun Tree<Int>.insert(elem: Int): Tree<Int> = when(this) {
+    EmptyTree -> Node(elem, EmptyTree, EmptyTree)
+    is Node -> {
+        if (elem <= this.value) {
+            Node(this.value, this.left.insert(elem), this.right)
+        } else {
+            Node(this.value, this.left, this.right.insert(elem))
+        }
+    }
+}

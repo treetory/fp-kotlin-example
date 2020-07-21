@@ -25,12 +25,18 @@ object Nil : FunList<Nothing>() {
 data class Cons<A>(val head: A, val tail: FunList<A>) : FunList<A>() {
     override fun <B> fmap(f: (A) -> B): FunList<B> = Cons(f(head), tail.fmap(f))
 }
-
-fun <A> FunList.Companion.pure(value: A): FunList<A> = TODO()
-
-infix fun <A> FunList<A>.append(other: FunList<A>): FunList<A> = TODO()
-
-infix fun <A, B> FunList<(A) -> B>.apply(f: FunList<A>): FunList<B> = TODO()
+// pure 확장함수는 value 를 받아서 value 가 head 이고, tail 이 Nil 인 길이가 1 인 FunList 를 반환한다.
+fun <A> FunList.Companion.pure(value: A): FunList<A> = Cons(value, Nil)
+// append 함수는 꼬리에 붙이는 것 이므로, tail 과 other 가 합성된 것이 Cons 의 tail 에 들어간다.
+infix fun <A> FunList<A>.append(other: FunList<A>): FunList<A> = when (this) {
+    Nil -> other
+    is Cons -> Cons(head, tail append other)
+}
+// 
+infix fun <A, B> FunList<(A) -> B>.apply(f: FunList<A>): FunList<B> = when (this) {
+    Nil -> Nil
+    is Cons -> f.fmap(head) append (tail apply f)
+}
 
 fun main() {
 

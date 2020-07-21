@@ -12,3 +12,5 @@ package fp.kotlin.example.chapter06.exercise
  */
 
 sealed class Tree<out T>
+object EmptyTree : Tree<Nothing>()
+data class Node<T>(val value: T, val left: Tree<T> = EmptyTree, val right: Tree<T> = EmptyTree) : Tree<T>()

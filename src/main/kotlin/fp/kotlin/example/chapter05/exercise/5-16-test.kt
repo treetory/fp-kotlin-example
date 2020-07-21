@@ -26,8 +26,18 @@ fun main() {
     println("${System.currentTimeMillis() - start} ms")    // 7 ms
 }
 
-private fun imperativeWay(intList: List<Int>): Int = TODO()
+private fun imperativeWay(intList: List<Int>): Int {
+    for (value in intList) {
+        val doubleValue = value * value
+        if (doubleValue < 10) {
+            return doubleValue
+        }
+    }
+    throw NoSuchElementException("There is no value")
+} // 0ms
 
-private fun functionalWay(intList: List<Int>): Int = TODO()
+private fun functionalWay(intList: List<Int>): Int =
+        intList.map { n -> n * n }.first { n -> n < 10 } // 563ms 464ms
 
-private fun realFunctionalWay(intList: List<Int>): Int = TODO()
+private fun realFunctionalWay(intList: List<Int>): Int =
+        intList.asSequence().map { n -> n * n }.first{ n -> n < 10} // 15ms 14ms
