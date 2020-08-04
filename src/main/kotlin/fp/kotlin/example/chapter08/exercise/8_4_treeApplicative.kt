@@ -16,7 +16,8 @@ import fp.kotlin.example.chapter08.pure
 
 fun main() {
 
-    val tree: Tree<Int> = TODO()
+    val tree: Tree<Int> =
+            Node(4, listOf(Node(8), Node(12), Node(5, listOf(Node(10), Node(15))), Node(6, listOf(Node(12), Node(18)))))
 
     require(tree == Tree.pure({ x: Int, y: Int -> x * y }.curried())
         apply Node(4, listOf(Node(5), Node(6)))

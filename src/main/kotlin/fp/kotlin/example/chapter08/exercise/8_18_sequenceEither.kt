@@ -1,8 +1,8 @@
 package fp.kotlin.example.chapter08.exercise
 
-import fp.kotlin.example.chapter08.Either
-import fp.kotlin.example.chapter08.Left
-import fp.kotlin.example.chapter08.Right
+import fp.kotlin.example.chapter04.solution.curried
+import fp.kotlin.example.chapter08.*
+import kotlin.apply
 
 /**
  *
@@ -23,4 +23,7 @@ fun main() {
 
 private fun <T> cons() = { x: T, xs: FunList<T> -> Cons(x, xs) }
 
-private fun <L, R> sequenceAByFoldRight(eitherList: FunList<Either<L, R>>): Either<L, FunList<R>> = TODO()
+private fun <L, R> sequenceAByFoldRight(eitherList: FunList<Either<L, R>>): Either<L, FunList<R>> = when (eitherList) {
+    is Nil -> Right(Nil)
+    is Cons -> Either.pure(cons<R>().curried()) apply eitherList.head apply sequenceAByFoldRight(eitherList.tail)
+}

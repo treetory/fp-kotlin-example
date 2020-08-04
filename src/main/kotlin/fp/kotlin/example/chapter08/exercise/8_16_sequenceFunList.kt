@@ -27,4 +27,7 @@ fun main() {
 
 private fun <T> cons() = { x: T, xs: FunList<T> -> Cons(x, xs) }
 
-private fun <T> sequenceAByFoldRight(listOfList: FunList<FunList<T>>): FunList<FunList<T>> = TODO()
+private fun <T> sequenceAByFoldRight(listOfList: FunList<FunList<T>>): FunList<FunList<T>> = when (listOfList) {
+    is Nil -> Cons(Nil, Nil)
+    is Cons -> FunList.pure(cons<T>().curried()) apply listOfList.head apply sequenceAByFoldRight(listOfList.tail)
+}

@@ -31,4 +31,7 @@ fun main() {
 
 private fun <T> cons() = { x: T, xs: FunList<T> -> Cons(x, xs) }
 
-private fun <T> sequenceAByFoldRight(treeList: FunList<Node<T>>): Node<FunList<T>> = TODO()
+private fun <T> sequenceAByFoldRight(treeList: FunList<Node<T>>): Node<FunList<T>> = when (treeList) {
+    is Nil -> Node(Nil)
+    is Cons -> Tree.pure(cons<T>().curried()) apply treeList.head apply sequenceAByFoldRight(treeList.tail)
+}

@@ -1,5 +1,7 @@
 package fp.kotlin.example.chapter08.exercise
 
+import java.lang.IllegalArgumentException
+
 /**
  *
  * 연습문제 8-6
@@ -20,4 +22,9 @@ fun main() {
     require(list1.zipList(list2) == Cons(50, Cons(30, Nil)))
 }
 
-fun <A, B>FunList<(A)->B>.zipList(other: FunList<A>): FunList<B> = TODO()
+fun <A, B>FunList<(A)->B>.zipList(other: FunList<A>): FunList<B> = when {
+    this is Nil -> Nil
+    other is Nil -> Nil
+    this is Cons && other is Cons -> Cons(this.head(other.head), this.tail.zipList(other.tail))
+    else -> throw IllegalArgumentException()
+}

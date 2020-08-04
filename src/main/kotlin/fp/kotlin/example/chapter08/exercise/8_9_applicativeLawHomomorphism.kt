@@ -13,8 +13,8 @@ fun main() {
     val function: (Int) -> Int = { x: Int -> x * 10 }
     val value: Int = 1
 
-    val left = TODO()
-    val right = TODO()
+    val left = FunList.pure(function) apply FunList.pure(value)
+    val right = FunList.pure(function(value))
 
     require(left == right)
 }

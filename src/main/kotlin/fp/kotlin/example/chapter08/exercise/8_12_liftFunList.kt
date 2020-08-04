@@ -24,4 +24,6 @@ fun main() {
         Cons("10Hello, ", Cons("10Kotlin", Cons("20Hello, ", Cons("20Kotlin", Nil)))))
 }
 
-private fun <A, B, R> liftA2(binaryFunction: (A, B) -> R): (FunList<A>, FunList<B>) -> FunList<R> = TODO()
+private fun <A, B, R> liftA2(binaryFunction: (A, B) -> R): (FunList<A>, FunList<B>) -> FunList<R> = {
+    f1: FunList<A>, f2: FunList<B> -> FunList.pure(binaryFunction.curried()) apply f1 apply f2
+}

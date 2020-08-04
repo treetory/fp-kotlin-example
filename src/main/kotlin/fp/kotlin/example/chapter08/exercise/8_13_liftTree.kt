@@ -25,4 +25,6 @@ fun main() {
     require(lifted3(Node(10), Node("Kotlin")) == Node("10Kotlin"))
 }
 
-private fun <A, B, R> liftA2(binaryFunction: (A, B) -> R): (Node<A>, Node<B>)-> Node<R> = TODO()
+private fun <A, B, R> liftA2(binaryFunction: (A, B) -> R): (Node<A>, Node<B>)-> Node<R> = {
+    f1: Node<A>, f2: Node<B> -> Tree.pure(binaryFunction.curried()) apply f1 apply f2
+}

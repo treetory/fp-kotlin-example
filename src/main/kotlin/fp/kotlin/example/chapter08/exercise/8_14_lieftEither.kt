@@ -25,4 +25,7 @@ fun main() {
     require(lifted3(Right(10), Right("Kotlin")) == Right("10Kotlin"))
 }
 
-private fun <A, B, R> liftA2(binaryFunction: (A, B) -> R): (Either<Nothing, A>, Either<Nothing, B>) -> Either<Nothing, R> = TODO()
+private fun <A, B, R> liftA2(binaryFunction: (A, B) -> R): (Either<Nothing, A>, Either<Nothing, B>) -> Either<Nothing, R> = {
+    f1: Either<Nothing, A>, f2: Either<Nothing, B> ->
+    Either.pure(binaryFunction.curried()) apply f1 apply f2
+}

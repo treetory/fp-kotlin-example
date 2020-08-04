@@ -29,4 +29,6 @@ private fun <P1, P2, P3, R> ((P1, P2, P3) -> R).curried(): (P1) -> (P2) -> (P3) 
 }
 
 private fun <A, B, C, R> liftA3(
-    tripleFunction: (A, B, C) -> R): (Maybe<A>, Maybe<B>, Maybe<C>) -> Maybe<R> = TODO()
+    tripleFunction: (A, B, C) -> R): (Maybe<A>, Maybe<B>, Maybe<C>) -> Maybe<R> = {
+    f1: Maybe<A>, f2: Maybe<B>, f3: Maybe<C> -> Maybe.pure(tripleFunction.curried()) apply f1 apply f2 apply f3
+}
