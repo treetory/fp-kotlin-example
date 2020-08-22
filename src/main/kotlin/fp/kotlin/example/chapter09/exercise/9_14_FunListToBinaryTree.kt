@@ -57,4 +57,4 @@ fun main() {
     require(tree3.toFunList() == funListOf(4, 7, 8, 5, 2, 6, 3, 1))
 }
 
-fun <A> Tree<A>.toFunList(): FunList<A> = TODO()
+fun <A> Tree<A>.toFunList(): FunList<A> = foldMap({ funListOf(it)}, FunListMonoid())

@@ -25,4 +25,4 @@ fun main() {
     require(!tree2.contains('x'))
 }
 
-fun <T> Tree<T>.contains(value: T): Boolean = TODO()
+fun <T> Tree<T>.contains(value: T): Boolean = foldMap({ it === value }, AnyMonoid())

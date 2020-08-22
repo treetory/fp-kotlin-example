@@ -23,12 +23,12 @@ sealed class FunList<out T> : Foldable<T>
 
 object Nil : FunList<Nothing>() {
     override fun <B> foldLeft(acc: B, f: (B, Nothing) -> B): B {
-        TODO()
+        return acc
     }
 }
 
 data class Cons<out T>(val head: T, val tail: FunList<T>) : FunList<T>() {
     override fun <B> foldLeft(acc: B, f: (B, T) -> B): B {
-        TODO()
+        return tail.foldLeft(f(acc, head), f)
     }
 }

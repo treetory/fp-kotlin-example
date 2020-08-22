@@ -40,6 +40,6 @@ class B4(val c: Maybe<C4>)
 class C4(val d: D4)
 class D4(val value: Maybe<String>)
 
-fun getValueOfD4(a: A4): Maybe<String> = TODO()
+fun getValueOfD4(a: A4): Maybe<String> = a.b.flatMap { it.c }.flatMap { it.d.value }
 
-fun getValueOfD4_2(a: A4): Maybe<String> = TODO()
+fun getValueOfD4_2(a: A4): Maybe<String> = a.b.flatMap { it.c }.fmap { it.d }.flatMap { it.value }

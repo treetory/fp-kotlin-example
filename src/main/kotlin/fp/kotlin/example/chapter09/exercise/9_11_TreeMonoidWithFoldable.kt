@@ -1,5 +1,6 @@
 package fp.kotlin.example.chapter09.exercise
 
+import fp.kotlin.example.chapter09.EmptyTree
 import fp.kotlin.example.chapter09.Foldable
 import fp.kotlin.example.chapter09.SumMonoid
 
@@ -59,6 +60,13 @@ sealed class Tree<out T> : Foldable<T>
 
 data class Node<out T>(val value: T, val forest: FunList<Node<T>> = Nil) : Tree<T>() {
 
-    override fun <B> foldLeft(acc: B, f: (B, T) -> B): B = TODO()
+    override fun <B> foldLeft(acc: B, f: (B, T) -> B): B = when(forest) {
+        is Nil -> f(acc, value)
+        is Cons -> f(loop(forest, f, acc), value)
+    }
 
+    private tailrec fun <B> loop(list: FunList<Node<T>>, f: (B, T) -> B, acc: B): B = when (list) {
+        Nil -> acc
+        is Cons -> loop(list.tail, f, list.head.foldLeft(acc, f))
+    }
 }

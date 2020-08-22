@@ -20,11 +20,11 @@ fun main() {
 
 class AnyMonoid : Monoid<Boolean> {
     override fun mempty(): Boolean {
-        TODO()
+        return false
     }
 
     override fun mappend(m1: Boolean, m2: Boolean): Boolean {
-        TODO()
+        return m1 || m2
     }
 
 }

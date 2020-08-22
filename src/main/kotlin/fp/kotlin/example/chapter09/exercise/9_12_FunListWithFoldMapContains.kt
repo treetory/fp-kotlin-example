@@ -18,4 +18,4 @@ fun main() {
     require(!funList2.contains('x'))
 }
 
-fun <T> FunList<T>.contains(value: T): Boolean = TODO()
+fun <T> FunList<T>.contains(value: T): Boolean = foldMap({ it == value }, AnyMonoid())
